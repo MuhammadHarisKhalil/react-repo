@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
-import './component/NavBar';
-import NavBar from './component/NavBar';
+import NavBar from './component/screens/NavBar';
 import {BrowserRouter,Route} from 'react-router-dom';
-import Home from "./component/Home";
-import Login from './component/Login';
-import Register from './component/Register';
-import Profile from './component/Profile';
+import Home from "./component/screens/Home";
+import Login from './component/screens/Login';
+import Register from './component/screens/Register';
+import Profile from './component/screens/Profile';
+import CreatePost from './component/screens/CreatePost';
 
 function App() {
   return (
@@ -23,6 +23,9 @@ function App() {
   </Route>
   <Route path="/profile">
     <Profile/>
+  </Route>
+  <Route path="/createpost">
+    <CreatePost/>
   </Route>
   </BrowserRouter>
   );
