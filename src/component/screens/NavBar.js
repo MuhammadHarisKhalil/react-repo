@@ -1,21 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../App";
 
+const NavBar = () => {
+  const { state, dispatch } = useContext(UserContext);
+  const history = useHistory()
+  const renderlist = () => {
+    if (state) {
+      return [
+        <li>
+          <Link to="/profile">Profile</Link>
+        </li>,
+        <li>
+          <Link to="/createpost">Create Post</Link>
+        </li>,
+        <li>
+          <button
+            className="btn #c62828 red darken-3 m-2"
+            onClick={() => {
+              localStorage.clear();
+              dispatch({ type: "CLEAR" });
+              history.push('/login')
+            }}
+          >
+            Logout
+          </button>
+        </li>,
+      ];
+    } else {
+      return [
+        <li>
+          <Link to="/login">Login</Link>
+        </li>,
+        <li>
+          <Link to="/register">Register</Link>
+        </li>,
+      ];
+    }
+  };
 
-const NavBar = ()=>{
-    return(
-        <nav>
-        <div className="nav-wrapper white">
-          <Link to="/" className="brand-logo">Instagram</Link>
-          <ul id="nav-mobile" className="right">
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/register">Register</Link></li>
-            <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/createpost">Create Post</Link></li>
-          </ul>
-        </div>
-      </nav>
-    )
-}
+  return (
+    <nav>
+      <div className="nav-wrapper white">
+        <Link to={state ? "/" : "/login"} className="brand-logo left">
+          Instagram
+        </Link>
+        <ul id="nav-mobile" className="right">
+          {renderlist()}
+        </ul>
+      </div>
+    </nav>
+  );
+};
 
-export default NavBar
+export default NavBar;

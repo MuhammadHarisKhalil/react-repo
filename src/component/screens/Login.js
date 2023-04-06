@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { Link,useHistory} from "react-router-dom";
+import {UserContext} from '../../App'
 import M from 'materialize-css';
 
 const Login = ()=>{
+
+    const {state,dispatch} = useContext(UserContext)
     const history = useHistory()
     const [email,setEmail]= useState("")
     const [password,setPassword]= useState("")
 
     const PostData = ()=>{
+        console.log("test")
         fetch('/signin',{
         method:"post",
         headers:{
@@ -23,8 +27,11 @@ const Login = ()=>{
             M.toast({html: data.error,classes:"#e53935 red darken-1"})
          }
          else{
+            localStorage.setItem('jwt',data.token)
+            localStorage.setItem('user',JSON.stringify(data.user))
+            dispatch({type:"USER",payload:data.user})
             M.toast({html: "User Login Successfully",classes:"#388e3c green darken-2"})
-            console.log(data)
+           // console.log(data)
             history.push('/')
          }
         }).catch(err=>{
